@@ -1,5 +1,7 @@
 Documentación: TiposDeDatos.sol
-📌 Explicación de los tipos de datos
+***************************************************
+Explicación de los tipos de datos
+***************************************************
 1.Datos primitivos
 
 bool: true o false.
