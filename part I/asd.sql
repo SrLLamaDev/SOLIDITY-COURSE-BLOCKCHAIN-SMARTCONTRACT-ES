@@ -502,3 +502,196 @@ MariaDB [practica]> describe attendance;
 | TimeLeave  | time        | YES  |     | NULL    |       |
 +------------+-------------+------+-----+---------+-------+
 6 rows in set (0.040 sec)
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| app                |
+| baseprueba         |
+| biblioteca         |
+| biblioteca2        |
+| casas              |
+| contactos          |
+| examen             |
+| examenf            |
+| grupo_lunes        |
+| information_schema |
+| inmobiliaria       |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| practica           |
+| pruebas            |
+| restaurante        |
+| sakila             |
+| seguridad_ejemplo  |
+| test               |
++--------------------+
+20 rows in set (0.054 sec)
+
+MariaDB [(none)]> use practica
+Database changed
+MariaDB [practica]> show tables;
++--------------------+
+| Tables_in_practica |
++--------------------+
+| attendance         |
+| categories         |
+| classes            |
+| courses            |
+| coursespercycle    |
+| cycles             |
+| enrollments        |
+| students           |
+| teachers           |
+| teacherspercourse  |
+| tests              |
+| testscores         |
++--------------------+
+12 rows in set (0.002 sec)
+
+MariaDB [practica]> select * from attendance;
++----------+---------+---------+-----------+------------+-----------+
+| CourseId | CycleId | ClassNo | StudentId | TimeArrive | TimeLeave |
++----------+---------+---------+-----------+------------+-----------+
+| CS101    | CYC001  |       1 | S003      | 10:00:00   | 12:00:00  |
+| CS101    | CYC001  |       1 | S004      | 10:10:00   | 12:00:00  |
+| MAT101   | CYC001  |       1 | S001      | 08:05:00   | 10:00:00  |
+| MAT101   | CYC001  |       1 | S002      | 08:00:00   | 10:00:00  |
+| PHY101   | CYC002  |       1 | S005      | 09:00:00   | 11:00:00  |
++----------+---------+---------+-----------+------------+-----------+
+5 rows in set (0.118 sec)
+
+MariaDB [practica]> select * from courses;
++----------+-------------------------+----------------------------------------+-----------------------------+
+| CourseId | CourseDescription       | Abstract                               | Bibliography                |
++----------+-------------------------+----------------------------------------+-----------------------------+
+| CHE101   | Química General         | Teoría atómica y enlaces químicos.     | Brown, LeMay.               |
+| CS101    | Intro a la Programación | Fundamentos de programación en Python. | Automate the Boring Stuff.  |
+| ENG101   | Inglés Técnico          | Vocabulario técnico para ingeniería.   | Oxford Technical English.   |
+| MAT101   | Matemáticas I           | Algebra y trigonometría básica.        | Libros de Baldor y Stewart. |
+| PHY101   | Física I                | Mecánica clásica.                      | Resnick y Halliday.         |
++----------+-------------------------+----------------------------------------+-----------------------------+
+5 rows in set (0.020 sec)
+
+MariaDB [practica]> select * from cycles;
++---------+----------------------+--------------+----------------+-------------------+-----------------+
+| CycleId | CycleDescription     | CycleEndDate | CycleStartDate | VacationStartDate | VacationEndDate |
++---------+----------------------+--------------+----------------+-------------------+-----------------+
+| CYC001  | Ciclo Primavera 2024 | 2024-06-30   | 2024-01-15     | 2024-04-01        | 2024-04-07      |
+| CYC002  | Ciclo Verano 2024    | 2024-08-30   | 2024-07-01     | NULL              | NULL            |
+| CYC003  | Ciclo Otoño 2024     | 2024-12-20   | 2024-09-01     | 2024-11-01        | 2024-11-07      |
+| CYC004  | Ciclo Invierno 2025  | 2025-02-28   | 2025-01-10     | NULL              | NULL            |
+| CYC005  | Ciclo Especial 2025  | 2025-04-30   | 2025-03-01     | NULL              | NULL            |
++---------+----------------------+--------------+----------------+-------------------+-----------------+
+5 rows in set (0.002 sec)
+
+MariaDB [practica]> select * from enrollemnts;
+ERROR 1146 (42S02): Table 'practica.enrollemnts' doesn't exist
+MariaDB [practica]> select * from enrollments;
++----------+---------+-----------+----------------+-----------+--------------------+
+| CourseId | CycleId | StudentId | EnrollmentDate | Cancelled | CancellationReason |
++----------+---------+-----------+----------------+-----------+--------------------+
+| CS101    | CYC001  | S003      | 2024-01-11     |         0 | NULL               |
+| CS101    | CYC001  | S004      | 2024-01-11     |         0 | NULL               |
+| MAT101   | CYC001  | S001      | 2024-01-10     |         0 | NULL               |
+| MAT101   | CYC001  | S002      | 2024-01-10     |         0 | NULL               |
+| PHY101   | CYC002  | S005      | 2024-06-20     |         0 | NULL               |
++----------+---------+-----------+----------------+-----------+--------------------+
+5 rows in set (0.019 sec)
+
+MariaDB [practica]> select * from students;
++-----------+-------------+----------------------+------------+------------+
+| StudentId | StudentName | Email                | BirthDate  | PhoneNo    |
++-----------+-------------+----------------------+------------+------------+
+| S001      | Mario López | mario.l@example.com  | 2000-04-15 | 600-112233 |
+| S002      | Lucía Gómez | lucia.g@example.com  | 2001-09-30 | 600-223344 |
+| S003      | Carlos Ruiz | carlos.r@example.com | 1999-01-20 | 600-334455 |
+| S004      | Andrea Paz  | andrea.p@example.com | 2000-11-10 | 600-445566 |
+| S005      | Sofía León  | sofia.l@example.com  | 2002-06-25 | 600-556677 |
++-----------+-------------+----------------------+------------+------------+
+5 rows in set (0.003 sec)
+
+MariaDB [practica]> select * from teachers;
++-----------+--------------+----------------------+----------+
+| TeacherId | TeacherName  | Email                | PhoneNo  |
++-----------+--------------+----------------------+----------+
+| T001      | Juan Pérez   | juanp@example.com    | 555-1234 |
+| T002      | Ana Torres   | ana.t@example.com    | 555-5678 |
+| T003      | Luis Mendoza | luis.m@example.com   | 555-9012 |
+| T004      | Carmen Rojas | carmen.r@example.com | 555-3456 |
+| T005      | Diego Luna   | diego.l@example.com  | 555-7890 |
++-----------+--------------+----------------------+----------+
+5 rows in set (0.003 sec)
+
+MariaDB [practica]> select * from teacherspercourse;
++----------+---------+-----------+
+| CourseId | CycleId | TeacherId |
++----------+---------+-----------+
+| CHE101   | CYC003  | T004      |
+| CS101    | CYC001  | T002      |
+| ENG101   | CYC004  | T005      |
+| MAT101   | CYC001  | T001      |
+| PHY101   | CYC002  | T003      |
++----------+---------+-----------+
+5 rows in set (0.002 sec)
+
+MariaDB [practica]> select * from tests;
++----------+---------+--------+------------+----------+------------------------+
+| CourseId | CycleId | TestNo | TestDate   | TestTime | Agenda                 |
++----------+---------+--------+------------+----------+------------------------+
+| CHE101   | CYC003  |      1 | 2024-10-01 | 14:00:00 | Tabla periódica        |
+| CS101    | CYC001  |      1 | 2024-03-05 | 11:00:00 | Lógica de programación |
+| MAT101   | CYC001  |      1 | 2024-03-01 | 09:00:00 | Algebra intermedia     |
+| MAT101   | CYC001  |      2 | 2024-04-01 | 09:00:00 | Ecuaciones lineales    |
+| PHY101   | CYC002  |      1 | 2024-08-01 | 10:00:00 | Leyes de Newton        |
++----------+---------+--------+------------+----------+------------------------+
+5 rows in set (0.002 sec)
+
+MariaDB [practica]> select * from testscores;
++----------+---------+--------+-----------+-------+
+| CourseId | CycleId | TestNo | StudentId | Score |
++----------+---------+--------+-----------+-------+
+| CS101    | CYC001  |      1 | S003      | 92.00 |
+| CS101    | CYC001  |      1 | S004      | 89.50 |
+| MAT101   | CYC001  |      1 | S001      | 85.50 |
+| MAT101   | CYC001  |      1 | S002      | 90.00 |
+| MAT101   | CYC001  |      2 | S001      | 88.00 |
++----------+---------+--------+-----------+-------+
+5 rows in set (0.021 sec)
+
+MariaDB [practica]> select * from categories;
++------------+------------------+
+| CategoryId | CategoryDescri   |
++------------+------------------+
+| CAT01      | Ciencias Exactas |
+| CAT02      | Tecnología       |
+| CAT03      | Humanidades      |
+| CAT04      | Idiomas          |
+| CAT05      | Ingeniería       |
++------------+------------------+
+5 rows in set (0.022 sec)
+
+MariaDB [practica]> select * from classes;
++----------+---------+---------+-----------+-----------------------+------------+-----------+----------+
+| CourseId | CycleId | ClassNo | TeacherId | ClassTitle            | ClassDate  | StartTime | EndTime  |
++----------+---------+---------+-----------+-----------------------+------------+-----------+----------+
+| CS101    | CYC001  |       1 | T002      | Introducción a Python | 2024-02-02 | 10:00:00  | 12:00:00 |
+| CS101    | CYC001  |       2 | T002      | Variables y tipos     | 2024-02-09 | 10:00:00  | 12:00:00 |
+| MAT101   | CYC001  |       1 | T001      | Algebra básica        | 2024-02-01 | 08:00:00  | 10:00:00 |
+| MAT101   | CYC001  |       2 | T001      | Funciones y gráficos  | 2024-02-08 | 08:00:00  | 10:00:00 |
+| PHY101   | CYC002  |       1 | T003      | Cinemática            | 2024-07-05 | 09:00:00  | 11:00:00 |
++----------+---------+---------+-----------+-----------------------+------------+-----------+----------+
+5 rows in set (0.022 sec)
+
+MariaDB [practica]> select * from coursespercycle;
++----------+---------+-----------------+---------------+
+| CourseId | CycleId | CourseStartDate | CourseEndDate |
++----------+---------+-----------------+---------------+
+| CHE101   | CYC003  | 2024-09-01      | 2024-12-20    |
+| CS101    | CYC001  | 2024-01-15      | 2024-06-30    |
+| ENG101   | CYC004  | 2025-01-10      | 2025-02-28    |
+| MAT101   | CYC001  | 2024-01-15      | 2024-06-30    |
+| PHY101   | CYC002  | 2024-07-01      | 2024-08-30    |
++----------+---------+-----------------+---------------+
+5 rows in set (0.021 sec)
