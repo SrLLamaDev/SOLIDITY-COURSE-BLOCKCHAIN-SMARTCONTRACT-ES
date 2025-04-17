@@ -290,8 +290,6 @@ MariaDB [practica]> describe cycles;
 +-------------------+--------------+------+-----+---------+-------+
 6 rows in set (0.040 sec)
 
-MariaDB [practica]> describe enrrollments;
-ERROR 1146 (42S02): Table 'practica.enrrollments' doesn't exist
 MariaDB [practica]> describe enrollments;
 +--------------------+--------------+------+-----+---------+-------+
 | Field              | Type         | Null | Key | Default | Extra |
@@ -586,8 +584,6 @@ MariaDB [practica]> select * from cycles;
 +---------+----------------------+--------------+----------------+-------------------+-----------------+
 5 rows in set (0.002 sec)
 
-MariaDB [practica]> select * from enrollemnts;
-ERROR 1146 (42S02): Table 'practica.enrollemnts' doesn't exist
 MariaDB [practica]> select * from enrollments;
 +----------+---------+-----------+----------------+-----------+--------------------+
 | CourseId | CycleId | StudentId | EnrollmentDate | Cancelled | CancellationReason |
