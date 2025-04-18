@@ -3,19 +3,19 @@ pragma solidity ^0.8.0;
 
 contract CalculadoraBasica {
     //uint => 0 hacia adelante
-    function suma(uint a, uint b) public pure returns(uint){
+    function suma(int a, int b) public pure returns(int){
         return a + b;
     }
 
-    function resta(uint a, uint b) public pure returns(uint){
+    function resta(int a, int b) public pure returns(int){
         return a - b;
     }
 
-    function multiplica(uint a, uint b) public pure returns(uint){
+    function multiplica(int a, int b) public pure returns(int){
         return a * b;
     }
 
-    function divide(uint a, uint b) public pure returns(uint){
+    function divide(int a, int b) public pure returns(int){
         return a / b;
     }
 }
