@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 /**
  * Son variables temporales usadas dentro de funciones
  * Existen mientras se ejecuta la función
- * 
  */
 contract VarLocal {
     
