@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-/**
- * Son variables almacendas permanetes en la BC
- * se declaran fuera de las funciones
- */
-contract VarEstado {
-    uint public contador = 0; // Variable de estado
+pragma solidity 0.8.29;
+/*
+VARIABLES DE ESTADO
+Son variables almacenadas en la blockchain
+este tipo de dato se declara fuera de las funciones
+*/
+contract VarEstado{
+    //inicio del contrato o la clase
+    uint public contador = 0;   //varaible de estado
 
-    function incrementar() public {
-        contador += 1;
+    function incrementar() public{
+        //incicio de la funcion
+        contador = contador + 1;
+        //fin de la funcion
     }
+    //fin del contrato o la clase
 }
-
