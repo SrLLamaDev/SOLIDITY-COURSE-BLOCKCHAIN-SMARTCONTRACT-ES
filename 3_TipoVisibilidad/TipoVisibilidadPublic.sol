@@ -1,17 +1,19 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-/** _Public_ Accesible desde cualquier lugar 
-* Dentro del mismo contrato 
-* Desde contratos heredados 
-* Desde contratos externos 
-* Desde fuera del contrato (por una wallet, dApp, etc.) 
- */
-contract TipoVisPublic {
-    
-    uint public numero = 10; // Crea automáticamente una función getter
-
-    function obtener() public view returns (uint) {
-        return numero;
+pragma solidity 0.8.29;
+/*
+        PUBLIC
+Accesible desde cualquier lugar
+- dentro del mismo contrato
+- desde contratos herados
+- desde contratos externos
+- desde fuera del contrato por ejmplo wallts, dapp ...
+*/
+contract TipoVisibilidadPublico {
+    uint public numero = 10;    //cuando usamos el public
+                                //automaticamente genera una funcion getter
+                                //getter = obtener
+    function obtenerAAA() public view returns (uint){
+        return numero;    
     }
 
 }
