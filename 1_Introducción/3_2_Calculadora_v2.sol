@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./ABDKMath64x64.sol"; // Asegúrate de tener esta librería en el mismo directorio
+//import "./ABDKMath64x64.sol"; // Asegúrate de tener esta librería en el mismo directorio
 
 contract CalculadoraBasica {
-    using ABDKMath64x64 for int128;
+    //using ABDKMath64x64 for int128;
 
     // Suma
     function suma(int a, int b) public pure returns(int) {
@@ -35,10 +35,12 @@ contract CalculadoraBasica {
     }
 
     // División usando la librería ABDKMath64x64
+    /*
     function divideABDK(int a, int b) public pure returns(int128) {
         require(b != 0, "No se puede dividir entre cero");
         int128 x = ABDKMath64x64.fromInt(a);
         int128 y = ABDKMath64x64.fromInt(b);
         return x.div(y); // Devuelve un número en formato 64.64
     }
+    */
 }
