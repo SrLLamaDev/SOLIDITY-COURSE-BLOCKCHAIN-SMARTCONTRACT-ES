@@ -6,21 +6,6 @@ contract CalculadoraBasica {
     function suma(int a, int b) public pure returns(int){
         return a + b;
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     function resta(int a, int b) public pure returns(int){
         return a - b;
