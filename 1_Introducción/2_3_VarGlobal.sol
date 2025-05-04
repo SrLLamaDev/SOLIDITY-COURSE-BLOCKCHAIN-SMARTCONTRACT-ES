@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-/**
- * Variables especiales proporcionadas por solidity
- * Contienen información sobre la blockchain
- */
-contract VarGlobal {
-    address public ultimoLlamador;
+pragma solidity 0.8.29;
+/*
+VARIABLE GLOBAL
+- Son variables especiales que nos proporciona el lenguaje de Solidity
+- Contienen informaci'on de la blockchain
+*/
+contract VarGlobal{
+    //inicio de contrato
+    address public ultimo_llamador;
     uint public ultimoValor;
 
     function recibir() public payable {
-        ultimoLlamador = msg.sender; // variable global
-        ultimoValor = msg.value;     // variable global
+        ultimo_llamador = msg.sender;   //variable global
+        ultimoValor = msg.value;        //variable global
     }
+    //fin de contrato
 }

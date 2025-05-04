@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.26;
+pragma solidity 0.8.29;
 /*
 VARIABLES LOCALES
 -   son variables temporales que son usadas dentro de
