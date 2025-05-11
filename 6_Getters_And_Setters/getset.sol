@@ -1,24 +1,43 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-/*
-get -- Obtener (leer) un valor.
-set -- Establecer (modificar) un valor.
-*/
-contract Persona {
-    string private nombre;
 
-    // SET: función para modificar el valor
-    function setNombre(string memory _nombre) public {
+/// ejemplo básico con getters automáticos y personalizados
+/// Tú
+/// Este contrato almacena y permite acceder a información de una persona
+
+contract Persona {
+    // Variables públicas generan getters automáticamente
+    string public nombre;
+    uint public edad;
+
+    // Variable privada (no se genera getter automáticamente)
+    string private direccionPrivada;
+
+    /// notice Constructor para inicializar el nombre y edad de la persona
+    /// param _nombre Nombre de la persona
+    /// param _edad Edad de la persona
+    constructor(string memory _nombre, uint _edad) {
         nombre = _nombre;
+        edad = _edad;
+        direccionPrivada = "Calle Secreta 123"; // Solo para ejemplo
     }
 
-    // GET: función para leer el valor
-    function getNombre() public view returns (string memory) {
-        return nombre;
+    /// notice Establece un nuevo nombre
+    /// param _nuevoNombre El nuevo nombre a asignar
+    function setNombre(string memory _nuevoNombre) public {
+        nombre = _nuevoNombre;
+    }
+
+    /// notice Establece una nueva dirección privada
+    /// param _direccion La dirección a almacenar (no visible públicamente)
+    function setDireccionPrivada(string memory _direccion) public {
+        direccionPrivada = _direccion;
+    }
+
+    /// Getter personalizado para obtener la dirección privada
+    /// dev Útil cuando una variable es privada y se quiere acceso controlado
+    /// return La dirección privada almacenada
+    function getDireccionPrivada() public view returns (string memory) {
+        return direccionPrivada;
     }
 }
-/*
---memory: temporal, barata, y rápida.
---storage: permanente, cara, y lenta (se guarda en la blockchain).
---calldata: solo para parámetros de entrada (más eficiente que memory, pero solo lectura).
-*/
