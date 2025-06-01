@@ -66,7 +66,59 @@ main {
 }
 
 .tarjeta p {
+    margin-bottom: 1rem;
+}
+/* Formulario*/
+form {
     display: flex;
     flex-direction: column;
 }
 
+form label {
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    color: var(--rosa-profundo);
+}
+
+form input, form textarea {
+    padding: 0.5rem;
+    border: 2px solid var(--rosa-medio);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    background-color: var(--rosa-suave);
+}
+
+form input:focus, form textarea:focus {
+    border-color: var(--rosa-profundo);
+    outline: none;
+    background-color: var(--gris-claro);
+}
+
+.boton {
+    background-color: var(--rosa-profundo);
+    color: var(--blanco);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+    background-color: var(--rosa-medio);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--rosa-claro);
+    border-top: 4px solid var(--rosa-profundo);
+    margin-top: 2rem;
+}
+footer p {
+    font-size: 0.9rem;
+    color: var(--texto);
+}   
