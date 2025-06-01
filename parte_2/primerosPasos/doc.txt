@@ -1,0 +1,13 @@
+- tener un IDE
+    VISUAL STUDIO CODE ✅
+    ATOM SUBLIME TEXT
+    ...
+- tener concimientos basicos -- CONTRATOS
+    HTML ✅
+    CSS ✅
+    JS ✅
+
+-PRIMERO
+    PRIMEROS PASOS HTML, CSS, JS
+-SEGUNDO
+    REPASANDO, USAMOS EL ARCHIVO.SOL
