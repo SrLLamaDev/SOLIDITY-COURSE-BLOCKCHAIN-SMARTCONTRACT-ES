@@ -8,6 +8,39 @@
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Banco Simple</h1>
+        
+        <div id="walletSection">
+            <button id="connectWallet">Conectar Billetera</button>
+            <div id="walletInfo" class="info hidden">">
+                <p><strong>Direccion conectada:</strong><span id="WalletAddress"></span></p>
+                <p><strong>Saldo:</strong><span id="saldo">0</span>ETH</p>
+            </div>
+        </div>
+
+        <!--! Seccion de operaciones-->
+
+        <div id="operationsSection" class="hidden">
+
+            <h3>Depositar ETH</h3>
+            <input type="number" id="depositAmount" placeholder="Cantidad en ETH" step="0.01">
+            <button onclick="depositar()">Depositar</button>
+
+            <h3>Retirar ETH</h3>
+            <input type="number" id="retiroAmount" placeholder="Cantidad en ETH" step="0.01">
+            <button onclick="retirar()">Retirar</button>
+
+            <div class="info">
+                <h3>Informacion del Contrato</h3>
+                <p><strong>Direccion del contrato:</strong><span id="contractAddress"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!--? Completar-->
+    
+    <script></script>
     
 </body>
 </html>
