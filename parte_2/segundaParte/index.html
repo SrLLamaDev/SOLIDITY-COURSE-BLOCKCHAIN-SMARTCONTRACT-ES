@@ -1,46 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">       
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banco Simple</title>
-    <link rel="stylesheet" href="estilo.css">
-</head>
+<html> 
+    <head>
+        <title>Banco Simple Cyberpunk</title>
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilo.css">
+    </head>
 <body>
     <div class="container">
         <h1>Banco Simple</h1>
         
+        <!-- Sección de conexión de billetera -->
         <div id="walletSection">
             <button id="connectWallet">Conectar Billetera</button>
-            <div id="walletInfo" class="info hidden">">
-                <p><strong>Direccion conectada:</strong><span id="WalletAddress"></span></p>
-                <p><strong>Saldo:</strong><span id="saldo">0</span>ETH</p>
+            <div id="walletInfo" class="info hidden">
+                <p><strong>Dirección conectada:</strong> <span id="walletAddress"></span></p>
+                <p><strong>Saldo:</strong> <span id="saldo">0</span> ETH</p>
             </div>
         </div>
-
-        <!--! Seccion de operaciones-->
-
+        
+        <!-- Sección de operaciones (oculta hasta conectar billetera) -->
         <div id="operationsSection" class="hidden">
-
             <h3>Depositar ETH</h3>
-            <input type="number" id="depositAmount" placeholder="Cantidad en ETH" step="0.01">
+            <input type="number" id="depositoAmount" placeholder="Cantidad en ETH" step="0.01">
             <button onclick="depositar()">Depositar</button>
-
+            
             <h3>Retirar ETH</h3>
             <input type="number" id="retiroAmount" placeholder="Cantidad en ETH" step="0.01">
             <button onclick="retirar()">Retirar</button>
-
+            
             <div class="info">
-                <h3>Informacion del Contrato</h3>
-                <p><strong>Direccion del contrato:</strong><span id="contractAddress"></span></p>
+                <h3>Información del Contrato</h3>
+                <p><strong>Dirección del contrato:</strong> <span id="contractAddress"></span></p>
             </div>
         </div>
     </div>
 
-    <!--? Completar-->
-    
-    <script></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script>
+        // Variables globales
+        let web3;
+        let contrato;
+        let cuenta;
+        
+        // ABI del contrato (cópialo desde Remix)
+        const abiContrato = [
+            {
+                "inputs": [],
+                "name": "ObtenerSaldo",
+                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "depositar",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "inputs": [{"internalType": "uint256", "name": "_amount", "type": "uint256"}],
+                "name": "retirar",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "anonymous": false,
+                "inputs": [{"indexed": true, "internalType": "address", "name": "user", "type": "address"}, {"indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256"}],
+                "name": "Deposito",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [{"indexed": true, "internalType": "address", "name": "user", "type": "address"}, {"indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256"}],
+                "name": "Reg",
+                "type": "event"
+            }
+        ];
+        
+        // Dirección del contrato desplegado (la cambiarás después)
+        const direccionContrato = "0xb97e3815868941d725045deaadcdcb2971069f22"; // Reemplaza con tu dirección real
+
+        // Inicialización cuando la página carga
+        window.onload = function() {
+            document.getElementById('contractAddress').textContent = direccionContrato;
+            document.getElementById('connectWallet').addEventListener('click', conectarBilletera);
+            
+            // Verificar si ya está conectado
+            if (window.ethereum && window.ethereum.selectedAddress) {
+                conectarBilletera();
+            }
+        };
+
+        // Función para conectar la billetera
+        async function conectarBilletera() {
+            if (!window.ethereum) {
+                alert("Por favor instala MetaMask para usar esta dApp!");
+                return;
+            }
+
+            try {
+                // Solicitar acceso a las cuentas
+                const cuentas = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                cuenta = cuentas[0];
+                
+                // Configurar Web3
+                web3 = new Web3(window.ethereum);
+                
+                // Configurar el contrato
+                contrato = new web3.eth.Contract(abiContrato, direccionContrato);
+                
+                // Mostrar información de la billetera
+                document.getElementById('walletAddress').textContent = cuenta;
+                document.getElementById('walletInfo').classList.remove('hidden');
+                document.getElementById('operationsSection').classList.remove('hidden');
+                
+                // Actualizar saldo
+                await actualizarSaldo();
+                
+                // Escuchar cambios de cuenta
+                window.ethereum.on('accountsChanged', (cuentas) => {
+                    cuenta = cuentas[0];
+                    document.getElementById('walletAddress').textContent = cuenta;
+                    actualizarSaldo();
+                });
+                
+                // Escuchar cambios de red
+                window.ethereum.on('chainChanged', () => {
+                    window.location.reload();
+                });
+                
+            } catch (error) {
+                console.error("Error al conectar la billetera:", error);
+            }
+        }
+
+        // Función para actualizar el saldo
+        async function actualizarSaldo() {
+            if (!contrato || !cuenta) return;
+            
+            try {
+                const saldoWei = await contrato.methods.ObtenerSaldo().call({ from: cuenta });
+                const saldoEth = web3.utils.fromWei(saldoWei, "ether");
+                document.getElementById("saldo").textContent = saldoEth;
+            } catch (error) {
+                console.error("Error al obtener saldo:", error);
+            }
+        }
+
+        // Función para depositar
+        async function depositar() {
+            const amount = document.getElementById("depositoAmount").value;
+            if (!amount || amount <= 0) {
+                alert("Por favor ingresa una cantidad válida");
+                return;
+            }
+            
+            try {
+                const amountWei = web3.utils.toWei(amount, "ether");
+                
+                await contrato.methods.depositar().send({
+                    from: cuenta,
+                    value: amountWei
+                });
+                
+                alert("Depósito exitoso!");
+                await actualizarSaldo();
+            } catch (error) {
+                console.error("Error en depósito:", error);
+                alert("Error en el depósito: " + error.message);
+            }
+        }
+
+        // Función para retirar
+        async function retirar() {
+            const amount = document.getElementById("retiroAmount").value;
+            if (!amount || amount <= 0) {
+                alert("Por favor ingresa una cantidad válida");
+                return;
+            }
+            
+            try {
+                const amountWei = web3.utils.toWei(amount, "ether");
+                
+                await contrato.methods.retirar(amountWei).send({
+                    from: cuenta
+                });
+                
+                alert("Retiro exitoso!");
+                await actualizarSaldo();
+            } catch (error) {
+                console.error("Error en retiro:", error);
+                alert("Error en el retiro: " + error.message);
+            }
+        }
+    </script>
 </body>
 </html>
